@@ -5,12 +5,9 @@
 package fr.m2i.apischlack.service;
 
 import fr.m2i.apischlack.dto.MessageMapper;
-import fr.m2i.apischlack.dto.OrderMapper;
 import fr.m2i.apischlack.exception.NotFoundException;
 import fr.m2i.apischlack.model.Message;
-import fr.m2i.apischlack.model.Order;
 import fr.m2i.apischlack.repository.MessageRepository;
-import fr.m2i.apischlack.repository.OrderRepository;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
