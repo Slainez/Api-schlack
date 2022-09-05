@@ -13,12 +13,12 @@ public class MessageDTO {
     private String user ;
     private String content ;
     private Date timestamp;
-    private Channel channel ;
+    private ChannelDTO channel ;
 
     public MessageDTO() {
     }
 
-    public MessageDTO(Long id, String user, String content, Date timestamp, Channel channel) {
+    public MessageDTO(Long id, String user, String content, Date timestamp, ChannelDTO channel) {
         this.id = id;
         this.user = user;
         this.content = content;
@@ -58,11 +58,11 @@ public class MessageDTO {
         this.timestamp = timestamp;
     }
 
-    public Channel getChannel() {
+    public ChannelDTO getChannel() {
         return channel;
     }
 
-    public void setChannel(Channel channel) {
+    public void setChannel(ChannelDTO channel) {
         this.channel = channel;
     }
 

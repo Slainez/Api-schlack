@@ -12,6 +12,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -35,6 +36,7 @@ public class Message {
     @Temporal(TemporalType.TIMESTAMP)
     private Date timestamp;
     
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "channel_id")
     private Channel channel;
@@ -89,11 +91,6 @@ public class Message {
 
     public void setChannel(Channel channel) {
         this.channel = channel;
-    }
-
-    @Override
-    public String toString() {
-        return "Message{" + "id=" + id + ", user=" + user + ", content=" + content + ", timestamp=" + timestamp + ", channel=" + channel + '}';
     }
 
    

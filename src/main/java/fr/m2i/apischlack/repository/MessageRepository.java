@@ -13,6 +13,6 @@ import org.springframework.stereotype.Repository;
 public interface MessageRepository extends JpaRepository<Message, Long>{
     
     
-    @Query("SELECT m FROM Message m WHERE m.channel = :channel_id")
+    @Query("SELECT m FROM Message m WHERE m.channel.id = :channel_id")
     List<Message> getAllMessageFromChannel(@Param("channel_id") Long channelId);
 }

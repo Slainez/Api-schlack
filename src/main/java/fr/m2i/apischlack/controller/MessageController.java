@@ -43,9 +43,11 @@ public class MessageController {
     
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Returns the list of all messages", nickname = "Get all messages", response = MessageDTO.class)
-    public ResponseEntity<Object> getAllMessageFromChannel(@PathVariable("id") Long id) {
-
-        List<Message> messages = messageService.findAllMessageByChannel(1L);
+    public ResponseEntity<Object> getAllMessageFromChannel(@PathVariable("id") String id) {
+        System.out.print("getAllMessageFromChannel :  "+ id);
+        Long ChanId = Long.parseLong(id);
+        List<Message> messages = messageService.findAllMessageByChannel(ChanId);
+        System.out.print("getAllMessageFromChannel :"+messages.toString());
         List<MessageDTO> dtos = new ArrayList();
 
         for (Message message : messages) {
@@ -72,7 +74,6 @@ public class MessageController {
             return ResponseEntity.status(HttpStatus.OK).body(createdDTO);
 
         } catch (Exception e) {
-            System.out.println(e.getMessage());
             return ErrorResponseEntity.build("An error occured", 500, "/messages", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -104,13 +105,14 @@ public class MessageController {
     }
 
     
-    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/message/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Return a message", nickname = "Get a message by id", response = MessageDTO.class)
     public ResponseEntity<Object> getMessageById(@PathVariable("id") String id) {
         
         try {
             Long messageId = Long.parseLong(id);
             Message founded = messageService.findById(messageId);
+            //System.out.println("getMessageById :"+ founded);
             MessageDTO dto = MessageMapper.buildMessageDTO(founded);
 
             return ResponseEntity.status(HttpStatus.OK).body(dto);

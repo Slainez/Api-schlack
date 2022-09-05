@@ -73,7 +73,6 @@ public class OrderController {
             return ResponseEntity.status(HttpStatus.OK).body(createdDTO);
 
         } catch (Exception e) {
-            System.out.println(e.getMessage());
             return ErrorResponseEntity.build("An error occured", 500, "/v1/orders", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

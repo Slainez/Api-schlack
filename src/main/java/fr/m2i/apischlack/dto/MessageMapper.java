@@ -4,6 +4,7 @@
  */
 package fr.m2i.apischlack.dto;
 
+import fr.m2i.apischlack.model.Channel;
 import fr.m2i.apischlack.model.Message;
 
 /**
@@ -13,13 +14,28 @@ import fr.m2i.apischlack.model.Message;
 public class MessageMapper {
     
     public static MessageDTO buildMessageDTO(Message message){
-        MessageDTO messageDTO = new MessageDTO(message.getId(),message.getUser(),message.getContent(),message.getTimestamp(),message.getChannel());
+        
+        ChannelDTO channelDTO = null;
+
+        if (message.getChannel() != null) {
+            channelDTO = ChannelMapper.buildChannelDTO(message.getChannel());
+        }
+        MessageDTO messageDTO = new MessageDTO(message.getId(),message.getUser(),message.getContent(),message.getTimestamp(),channelDTO);
         
         return messageDTO ;
     }
     
         public static Message buildMessage(MessageDTO messageDTO){
-        Message message = new Message(messageDTO.getId(),messageDTO.getUser(),messageDTO.getContent(),messageDTO.getTimestamp(),messageDTO.getChannel());
+            //System.out.println("buildMessage :"+ messageDTO);
+            
+            Channel channel = null;
+
+        if (messageDTO.getChannel() != null && messageDTO.getChannel().getId() != null) {
+            System.out.println("buildMessage If :"+ messageDTO);
+            channel = new Channel();
+            channel.setId(messageDTO.getChannel().getId());
+        }
+        Message message = new Message(messageDTO.getId(),messageDTO.getUser(),messageDTO.getContent(),messageDTO.getTimestamp(),channel);
         
         return message ;
     }
