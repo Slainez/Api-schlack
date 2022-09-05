@@ -1,4 +1,4 @@
-package fr.m2i.apicrm.config;
+package fr.m2i.apischlack.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -27,7 +27,7 @@ public class SwaggerConfig {
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("fr.m2i.apicrm"))
+                .apis(RequestHandlerSelectors.basePackage("fr.m2i.apischlack"))
                 .paths(PathSelectors.ant("/v1/**"))
                 .build();
     }

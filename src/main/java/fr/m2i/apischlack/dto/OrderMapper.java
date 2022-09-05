@@ -2,11 +2,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package fr.m2i.apicrm.dto;
+package fr.m2i.apischlack.dto;
 
-import fr.m2i.apicrm.model.Customer;
-import fr.m2i.apicrm.model.Order;
-import fr.m2i.apicrm.model.OrderState;
+import fr.m2i.apischlack.model.Customer;
+import fr.m2i.apischlack.model.Order;
+import fr.m2i.apischlack.model.OrderState;
 
 /**
  *

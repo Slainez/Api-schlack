@@ -2,62 +2,41 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package fr.m2i.apicrm.model;
+package fr.m2i.apischlack.dto;
 
-import com.sun.istack.NotNull;
-import java.util.List;
+import fr.m2i.apischlack.model.OrderState;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-@Entity
-@Table(name="orders")
-public class Order {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
+
+public class OrderDTO {
+    
     private Long id;
-    
-    @ManyToOne
-    @JoinColumn(name = "customer_id", nullable = false)
-    private Customer customer;
-
-    @Column(name="type")
+    private CustomerDTO customer;
     private String type;
-    
-    @Column(name="label")
     private String label;
-    
-    @Column(name="nb_days")
     private Integer numberOfDays;
-    
-    @Column(name="unit_price")
     private Float unitPrice;
-    
-    @Column(name="total_exclude_taxe")
     private Float totalExcludeTaxe;
-
-    @Column(name="total_with_taxe")
     private Float totalWithTaxe;
+    private String state;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name="state", columnDefinition = "ENUM('CANCELED', 'OPTION', 'CONFIRMED') NOT NULL")
-    private OrderState state;
-
-    public Order() {
+    public OrderDTO() {
 
     }
 
-    public Order(Long id, Customer customer, String type, String label,
+    public OrderDTO(Long id, CustomerDTO customer, String type, String label,
             Integer numberOfDays, Float unitPrice, Float totalExcludeTaxe,
-            Float totalWithTaxe, OrderState state) {
+            Float totalWithTaxe, String state) {
         this.id = id;
         this.customer = customer;
         this.type = type;
@@ -77,11 +56,11 @@ public class Order {
         this.id = id;
     }
 
-    public Customer getCustomer() {
+    public CustomerDTO getCustomer() {
         return customer;
     }
 
-    public void setCustomer(Customer customer) {
+    public void setCustomer(CustomerDTO customer) {
         this.customer = customer;
     }
 
@@ -133,11 +112,11 @@ public class Order {
         this.totalWithTaxe = totalWithTaxe;
     }
 
-    public OrderState getState() {
+    public String getState() {
         return state;
     }
 
-    public void setState(OrderState state) {
+    public void setState(String state) {
         this.state = state;
     }
 

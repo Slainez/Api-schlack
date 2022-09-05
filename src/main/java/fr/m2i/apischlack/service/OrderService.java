@@ -2,12 +2,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package fr.m2i.apicrm.service;
+package fr.m2i.apischlack.service;
 
-import fr.m2i.apicrm.dto.OrderMapper;
-import fr.m2i.apicrm.exception.NotFoundException;
-import fr.m2i.apicrm.model.Order;
-import fr.m2i.apicrm.repository.OrderRepository;
+import fr.m2i.apischlack.dto.OrderMapper;
+import fr.m2i.apischlack.exception.NotFoundException;
+import fr.m2i.apischlack.model.Order;
+import fr.m2i.apischlack.repository.OrderRepository;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

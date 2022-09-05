@@ -2,14 +2,14 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package fr.m2i.apicrm.controller;
+package fr.m2i.apischlack.controller;
 
-import fr.m2i.apicrm.dto.OrderDTO;
-import fr.m2i.apicrm.dto.OrderMapper;
-import fr.m2i.apicrm.exception.NotFoundException;
-import fr.m2i.apicrm.model.Order;
-import fr.m2i.apicrm.response.ErrorResponseEntity;
-import fr.m2i.apicrm.service.IOrderService;
+import fr.m2i.apischlack.dto.OrderDTO;
+import fr.m2i.apischlack.dto.OrderMapper;
+import fr.m2i.apischlack.exception.NotFoundException;
+import fr.m2i.apischlack.model.Order;
+import fr.m2i.apischlack.response.ErrorResponseEntity;
+import fr.m2i.apischlack.service.IOrderService;
 import io.swagger.annotations.ApiOperation;
 import java.util.ArrayList;
 import java.util.List;

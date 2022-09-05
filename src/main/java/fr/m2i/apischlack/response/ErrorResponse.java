@@ -1,4 +1,4 @@
-package fr.m2i.apicrm.response;
+package fr.m2i.apischlack.response;
 
 import java.time.LocalDateTime;
 

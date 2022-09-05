@@ -1,13 +1,13 @@
-package fr.m2i.apicrm;
+package fr.m2i.apischlack;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class ApicrmApplication {
+public class ApischlackApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(ApicrmApplication.class, args);
+		SpringApplication.run(ApischlackApplication.class, args);
 	}
 
 }

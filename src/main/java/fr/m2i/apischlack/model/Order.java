@@ -2,41 +2,62 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package fr.m2i.apicrm.dto;
+package fr.m2i.apischlack.model;
 
-import fr.m2i.apicrm.model.OrderState;
+import com.sun.istack.NotNull;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+@Entity
+@Table(name="orders")
+public class Order {
 
-
-
-public class OrderDTO {
-    
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private CustomerDTO customer;
-    private String type;
-    private String label;
-    private Integer numberOfDays;
-    private Float unitPrice;
-    private Float totalExcludeTaxe;
-    private Float totalWithTaxe;
-    private String state;
+    
+    @ManyToOne
+    @JoinColumn(name = "customer_id", nullable = false)
+    private Customer customer;
 
-    public OrderDTO() {
+    @Column(name="type")
+    private String type;
+    
+    @Column(name="label")
+    private String label;
+    
+    @Column(name="nb_days")
+    private Integer numberOfDays;
+    
+    @Column(name="unit_price")
+    private Float unitPrice;
+    
+    @Column(name="total_exclude_taxe")
+    private Float totalExcludeTaxe;
+
+    @Column(name="total_with_taxe")
+    private Float totalWithTaxe;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name="state", columnDefinition = "ENUM('CANCELED', 'OPTION', 'CONFIRMED') NOT NULL")
+    private OrderState state;
+
+    public Order() {
 
     }
 
-    public OrderDTO(Long id, CustomerDTO customer, String type, String label,
+    public Order(Long id, Customer customer, String type, String label,
             Integer numberOfDays, Float unitPrice, Float totalExcludeTaxe,
-            Float totalWithTaxe, String state) {
+            Float totalWithTaxe, OrderState state) {
         this.id = id;
         this.customer = customer;
         this.type = type;
@@ -56,11 +77,11 @@ public class OrderDTO {
         this.id = id;
     }
 
-    public CustomerDTO getCustomer() {
+    public Customer getCustomer() {
         return customer;
     }
 
-    public void setCustomer(CustomerDTO customer) {
+    public void setCustomer(Customer customer) {
         this.customer = customer;
     }
 
@@ -112,11 +133,11 @@ public class OrderDTO {
         this.totalWithTaxe = totalWithTaxe;
     }
 
-    public String getState() {
+    public OrderState getState() {
         return state;
     }
 
-    public void setState(String state) {
+    public void setState(OrderState state) {
         this.state = state;
     }
 

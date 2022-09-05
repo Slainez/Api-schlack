@@ -2,12 +2,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package fr.m2i.apicrm.service;
+package fr.m2i.apischlack.service;
 
-import fr.m2i.apicrm.dto.CustomerMapper;
-import fr.m2i.apicrm.exception.NotFoundException;
-import fr.m2i.apicrm.model.Customer;
-import fr.m2i.apicrm.repository.CustomerRepository;
+import fr.m2i.apischlack.dto.CustomerMapper;
+import fr.m2i.apischlack.exception.NotFoundException;
+import fr.m2i.apischlack.model.Customer;
+import fr.m2i.apischlack.repository.CustomerRepository;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
