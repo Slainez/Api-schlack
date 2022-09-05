@@ -8,6 +8,8 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -28,14 +30,14 @@ public class Channel {
     @Column(name="listMessage")
     private List<Message> listMessage;
 
-
-    @Column(name="main", columnDefinition = "TINYINT(1) DEFAULT 1 NOT NULL")
-    private Boolean main;
+    @Enumerated(EnumType.STRING)
+    @Column(name="main", columnDefinition = "ENUM('MAIN', 'NOTMAIN', 'SUB') NOT NULL")
+    private ChannelMain main;
 
     public Channel() {
     }
 
-    public Channel(Long id, String name, List<Message> listMessage, Boolean main) {
+    public Channel(Long id, String name, List<Message> listMessage, ChannelMain main) {
         this.id = id;
         this.name = name;
         this.listMessage = listMessage;
@@ -66,11 +68,11 @@ public class Channel {
         this.listMessage = listMessage;
     }
 
-    public Boolean getMain() {
+    public ChannelMain getMain() {
         return main;
     }
 
-    public void setMain(Boolean main) {
+    public void setMain(ChannelMain main) {
         this.main = main;
     }
 
