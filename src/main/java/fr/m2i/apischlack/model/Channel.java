@@ -5,11 +5,13 @@
 package fr.m2i.apischlack.model;
 
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -22,8 +24,9 @@ public class Channel {
     @Column(name="name")
     private String name;
 
+    @OneToMany(mappedBy="channel", cascade=CascadeType.ALL)
     @Column(name="listMessage")
-    private List<Object> listMessage;
+    private List<Message> listMessage;
 
 
     @Column(name="main", columnDefinition = "TINYINT(1) DEFAULT 1 NOT NULL")
@@ -32,7 +35,7 @@ public class Channel {
     public Channel() {
     }
 
-    public Channel(Long id, String name, List<Object> listMessage, Boolean main) {
+    public Channel(Long id, String name, List<Message> listMessage, Boolean main) {
         this.id = id;
         this.name = name;
         this.listMessage = listMessage;
@@ -55,11 +58,11 @@ public class Channel {
         this.name = name;
     }
 
-    public List<Object> getListMessage() {
+    public List<Message> getListMessage() {
         return listMessage;
     }
 
-    public void setListMessage(List<Object> listMessage) {
+    public void setListMessage(List<Message> listMessage) {
         this.listMessage = listMessage;
     }
 
