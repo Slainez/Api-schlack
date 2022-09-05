@@ -12,7 +12,7 @@ import java.util.List;
  * @author ben
  */
 public interface IMessageService {
-    List<Message> findAll();
+    List<Message> findAllMessageByChannel(Long id);
     Message findById(Long id);
     Message save(Message message);
     Message update(Long id,Message content);

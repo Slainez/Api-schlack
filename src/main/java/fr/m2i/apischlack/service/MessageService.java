@@ -29,8 +29,8 @@ public class MessageService implements IMessageService{
         this.repo = repo;
     }
     @Override
-    public List<Message> findAll() {
-        return repo.findAll();
+    public List<Message> findAllMessageByChannel(Long id) {
+        return repo.getAllMessageFromChannel(id);
     }
 
     @Override
