@@ -30,7 +30,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author ben
  */
 @RestController
-@RequestMapping("/messages")
+@RequestMapping("/v1/messages")
 public class MessageController {
     
     
@@ -41,9 +41,9 @@ public class MessageController {
         this.messageService = messageService;
     }
     
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    @ApiOperation(value = "Returns the list of all messages", nickname = "Get all orders", response = MessageDTO.class)
-    public ResponseEntity<Object> getAllMessageFromChannel() {
+    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "Returns the list of all messages", nickname = "Get all messages", response = MessageDTO.class)
+    public ResponseEntity<Object> getAllMessageFromChannel(@PathVariable("id") Long id) {
 
         List<Message> messages = messageService.findAllMessageByChannel(1L);
         List<MessageDTO> dtos = new ArrayList();
@@ -73,7 +73,7 @@ public class MessageController {
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            return ErrorResponseEntity.build("An error occured", 500, "/v1/orders", HttpStatus.INTERNAL_SERVER_ERROR);
+            return ErrorResponseEntity.build("An error occured", 500, "/messages", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
     
@@ -95,11 +95,11 @@ public class MessageController {
             return ResponseEntity.status(HttpStatus.OK).body(updatedDTO);
 
         } catch (NumberFormatException ne) {
-            return ErrorResponseEntity.build("The parameter 'id' is not valid", 400, "/v1/orders/" + id, HttpStatus.BAD_REQUEST);
+            return ErrorResponseEntity.build("The parameter 'id' is not valid", 400, "/messages/" + id, HttpStatus.BAD_REQUEST);
         } catch (NotFoundException nfe) {
-            return ErrorResponseEntity.build("Order was not found", 404, "/v1/orders/" + id, HttpStatus.NOT_FOUND);
+            return ErrorResponseEntity.build("Order was not found", 404, "/messages/" + id, HttpStatus.NOT_FOUND);
         } catch (Exception e) {
-            return ErrorResponseEntity.build("An error occured", 500, "/v1/orders/" + id, HttpStatus.INTERNAL_SERVER_ERROR);
+            return ErrorResponseEntity.build("An error occured", 500, "/messages/" + id, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -116,13 +116,14 @@ public class MessageController {
             return ResponseEntity.status(HttpStatus.OK).body(dto);
 
         } catch (NumberFormatException ne) {
-            return ErrorResponseEntity.build("The parameter 'id' is not valid", 400, "/v1/orders/" + id, HttpStatus.BAD_REQUEST);
+            return ErrorResponseEntity.build("The parameter 'id' is not valid", 400, "/messages/" + id, HttpStatus.BAD_REQUEST);
         } catch (NotFoundException nfe) {
-            return ErrorResponseEntity.build("Message was not found", 404, "/v1/orders/" + id, HttpStatus.NOT_FOUND);
+            return ErrorResponseEntity.build("Message was not found", 404, "/messages/" + id, HttpStatus.NOT_FOUND);
         } catch (Exception e) {
-            return ErrorResponseEntity.build("An error occured", 500, "/v1/orders/" + id, HttpStatus.INTERNAL_SERVER_ERROR);
+            return ErrorResponseEntity.build("An error occured", 500, "/messages/" + id, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    
    @DeleteMapping(value = "/{id}")
    @ApiOperation(value = "delete a message", nickname = "Delete a message by id", code = 204)
     public ResponseEntity<Object> deleteMessage(@PathVariable("id") String id) {
@@ -133,11 +134,11 @@ public class MessageController {
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 
         } catch (NumberFormatException ne) {
-            return ErrorResponseEntity.build("The parameter 'id' is not valid", 400, "/v1/orders/" + id, HttpStatus.BAD_REQUEST);
+            return ErrorResponseEntity.build("The parameter 'id' is not valid", 400, "/messages/" + id, HttpStatus.BAD_REQUEST);
         } catch (NotFoundException nfe) {
-            return ErrorResponseEntity.build("Order was not found", 404, "/v1/orders/" + id, HttpStatus.NOT_FOUND);
+            return ErrorResponseEntity.build("Order was not found", 404, "/messages/" + id, HttpStatus.NOT_FOUND);
         } catch (Exception e) {
-            return ErrorResponseEntity.build("An error occured", 500, "/v1/orders/" + id, HttpStatus.INTERNAL_SERVER_ERROR);
+            return ErrorResponseEntity.build("An error occured", 500, "/messages/" + id, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }
