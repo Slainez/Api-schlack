@@ -4,6 +4,7 @@
  */
 package fr.m2i.apischlack.service;
 
+import fr.m2i.apischlack.dto.MessageMapper;
 import fr.m2i.apischlack.dto.OrderMapper;
 import fr.m2i.apischlack.exception.NotFoundException;
 import fr.m2i.apischlack.model.Message;
