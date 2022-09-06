@@ -2,6 +2,7 @@
 package fr.m2i.apischlack.repository;
 
 
+import fr.m2i.apischlack.dto.MessageDTO;
 import fr.m2i.apischlack.model.Message;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -11,8 +12,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface MessageRepository extends JpaRepository<Message, Long>{
-    
-    
-    @Query("SELECT m FROM Message m WHERE m.channel.id = :channel_id")
+        
+    @Query("SELECT new Message(m.id, m.user, m.content, m.timestamp) FROM Message m WHERE m.channel.id = :channel_id")
     List<Message> getAllMessageFromChannel(@Param("channel_id") Long channelId);
 }

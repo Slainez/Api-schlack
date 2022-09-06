@@ -26,6 +26,12 @@ public class MessageDTO {
         this.channel = channel;
     }
 
+    public MessageDTO(String user, String content, Date timestamp) {
+        this.user = user;
+        this.content = content;
+        this.timestamp = timestamp;
+    }
+
     public Long getId() {
         return id;
     }

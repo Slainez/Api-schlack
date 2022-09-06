@@ -41,6 +41,14 @@ public class Message {
     @JoinColumn(name = "channel_id")
     private Channel channel;
 
+
+    public Message(Long id,String user, String content, Date timestamp) {
+        this.id = id;
+        this.user = user;
+        this.content = content;
+        this.timestamp = timestamp;
+    }
+    
     public Message(Long id, String user, String content, Date timestamp, Channel channel) {
         this.id = id;
         this.user = user;
@@ -48,6 +56,7 @@ public class Message {
         this.timestamp = timestamp;
         this.channel = channel;
     }
+
 
 
     public Message() {
