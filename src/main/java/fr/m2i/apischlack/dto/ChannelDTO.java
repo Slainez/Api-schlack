@@ -17,16 +17,16 @@ public class ChannelDTO {
     private Long id;
     private String name;
     private List<Message> listMessage;
-    private String main;
+    private String channelType;
 
     public ChannelDTO() {
     }
 
-    public ChannelDTO(Long id, String name, List<Message> listMessage, String main) {
+    public ChannelDTO(Long id, String name, List<Message> listMessage, String channelType) {
         this.id = id;
         this.name = name;
         this.listMessage = listMessage;
-        this.main = main;
+        this.channelType = channelType;
     }
 
     public Long getId() {
@@ -53,12 +53,12 @@ public class ChannelDTO {
         this.listMessage = listMessage;
     }
 
-    public String getMain() {
-        return main;
+    public String getChannelType() {
+        return channelType;
     }
 
-    public void setMain(String main) {
-        this.main = main;
+    public void setChannelType(String channelType) {
+        this.channelType = channelType;
     }
 
     

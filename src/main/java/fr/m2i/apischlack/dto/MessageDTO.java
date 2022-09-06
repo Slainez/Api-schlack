@@ -72,18 +72,6 @@ public class MessageDTO {
         this.channel = channel;
     }
 
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("MessageDTO{");
-        sb.append("id=").append(id);
-        sb.append(", user=").append(user);
-        sb.append(", content=").append(content);
-        sb.append(", timestamp=").append(timestamp);
-        sb.append(", channel=").append(channel);
-        sb.append('}');
-        return sb.toString();
-    }
-    
+   
     
 }

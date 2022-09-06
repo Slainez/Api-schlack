@@ -31,17 +31,17 @@ public class Channel {
     private List<Message> listMessage;
 
     @Enumerated(EnumType.STRING)
-    @Column(name="main", columnDefinition = "ENUM('MAIN', 'NOTMAIN', 'SUB') NOT NULL")
-    private ChannelMain main;
+    @Column(name="channel_type", columnDefinition = "ENUM('MAIN', 'NOTMAIN', 'SUB') NOT NULL")
+    private ChannelType channelType;
 
     public Channel() {
     }
 
-    public Channel(Long id, String name, List<Message> listMessage, ChannelMain main) {
+    public Channel(Long id, String name, List<Message> listMessage, ChannelType channelType) {
         this.id = id;
         this.name = name;
         this.listMessage = listMessage;
-        this.main = main;
+        this.channelType = channelType;
     }
 
     public Long getId() {
@@ -68,18 +68,14 @@ public class Channel {
         this.listMessage = listMessage;
     }
 
-    public ChannelMain getMain() {
-        return main;
+    public ChannelType getChannelType() {
+        return channelType;
     }
 
-    public void setMain(ChannelMain main) {
-        this.main = main;
+    public void setChannelType(ChannelType channelType) {
+        this.channelType = channelType;
     }
 
-    @Override
-    public String toString() {
-        return "Channel{" + "id=" + id + ", name=" + name + ", listMessage=" + listMessage + ", main=" + main + '}';
-    }
     
 
 }

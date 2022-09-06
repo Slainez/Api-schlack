@@ -44,16 +44,27 @@ public class MessageController {
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Returns the list of all messages from a channel", nickname = "Get all messages from channel", response = MessageDTO.class)
     public ResponseEntity<Object> getAllMessageFromChannel(@PathVariable("id") String id) {
-        Long ChanId = Long.parseLong(id);
-        List<Message> messages = messageService.findAllMessageByChannel(ChanId);
-        List<MessageDTO> dtos = new ArrayList();
+        try {
+            Long ChanId = Long.parseLong(id);
+            List<Message> messages = messageService.findAllMessageByChannel(ChanId);
+            if (messages.isEmpty()) {
+                return ErrorResponseEntity.build("Channel was not found", 404, "/v1/channels/" + id, HttpStatus.NOT_FOUND);
+            }
+            List<MessageDTO> dtos = new ArrayList();
 
-        for (Message message : messages) {
-            MessageDTO dto = MessageMapper.buildMessageDTO(message);
-            dtos.add(dto);
+            for (Message message : messages) {
+                MessageDTO dto = MessageMapper.buildMessageDTO(message);
+                dtos.add(dto);
+            }
+
+            return ResponseEntity.status(HttpStatus.OK).body(dtos);
+        } catch (NumberFormatException ne) {
+            return ErrorResponseEntity.build("The parameter 'id' is not valid", 400, "/v1/channels/" + id, HttpStatus.BAD_REQUEST);
+        } catch (NotFoundException nfe) {
+            return ErrorResponseEntity.build("Channel was not found", 404, "/v1/channels/" + id, HttpStatus.NOT_FOUND);
+        } catch (Exception e) {
+            return ErrorResponseEntity.build("An error occured", 500, "/v1/channels/" + id, HttpStatus.INTERNAL_SERVER_ERROR);
         }
-
-        return ResponseEntity.status(HttpStatus.OK).body(dtos);
     }
     
     // findById
@@ -98,6 +109,7 @@ public class MessageController {
         } catch (NotFoundException nfe) {
             return ErrorResponseEntity.build("Message was not found", 404, "/messages/" + id, HttpStatus.NOT_FOUND);
         } catch (Exception e) {
+            System.out.println(e.toString());
             return ErrorResponseEntity.build("An error occured", 500, "/messages/" + id, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
