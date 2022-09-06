@@ -44,10 +44,8 @@ public class MessageController {
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Returns the list of all messages", nickname = "Get all messages", response = MessageDTO.class)
     public ResponseEntity<Object> getAllMessageFromChannel(@PathVariable("id") String id) {
-        System.out.print("getAllMessageFromChannel :  "+ id);
         Long ChanId = Long.parseLong(id);
         List<Message> messages = messageService.findAllMessageByChannel(ChanId);
-        System.out.print("getAllMessageFromChannel :"+messages.toString());
         List<MessageDTO> dtos = new ArrayList();
 
         for (Message message : messages) {
@@ -112,7 +110,6 @@ public class MessageController {
         try {
             Long messageId = Long.parseLong(id);
             Message founded = messageService.findById(messageId);
-            //System.out.println("getMessageById :"+ founded);
             MessageDTO dto = MessageMapper.buildMessageDTO(founded);
 
             return ResponseEntity.status(HttpStatus.OK).body(dto);
