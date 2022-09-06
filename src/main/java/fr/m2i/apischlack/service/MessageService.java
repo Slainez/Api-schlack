@@ -37,7 +37,7 @@ public class MessageService implements IMessageService{
 
     @Override
     public Message MessageFindByIdPut(Long id) throws NotFoundException{
-        return repo.MessageFindById(id);
+        return repo.MessageFindByIdPut(id);
     }
     
     @Override
@@ -54,10 +54,7 @@ public class MessageService implements IMessageService{
     @Override
     public Message update(Long id, Message content) {
         Message toUpdate = MessageFindByIdPut(id);
-        System.out.println("update toUpdate : "+toUpdate.toString());
         toUpdate = MessageMapper.copy(toUpdate, content);
-        System.out.println("update toUpdate 2 : "+toUpdate.toString());
-
         return save(toUpdate);
     }
     

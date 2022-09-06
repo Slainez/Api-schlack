@@ -42,7 +42,7 @@ public class MessageController {
     }
     
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    @ApiOperation(value = "Returns the list of all messages", nickname = "Get all messages", response = MessageDTO.class)
+    @ApiOperation(value = "Returns the list of all messages from a channel", nickname = "Get all messages from channel", response = MessageDTO.class)
     public ResponseEntity<Object> getAllMessageFromChannel(@PathVariable("id") String id) {
         Long ChanId = Long.parseLong(id);
         List<Message> messages = messageService.findAllMessageByChannel(ChanId);
@@ -96,7 +96,7 @@ public class MessageController {
         } catch (NumberFormatException ne) {
             return ErrorResponseEntity.build("The parameter 'id' is not valid", 400, "/messages/" + id, HttpStatus.BAD_REQUEST);
         } catch (NotFoundException nfe) {
-            return ErrorResponseEntity.build("Order was not found", 404, "/messages/" + id, HttpStatus.NOT_FOUND);
+            return ErrorResponseEntity.build("Message was not found", 404, "/messages/" + id, HttpStatus.NOT_FOUND);
         } catch (Exception e) {
             return ErrorResponseEntity.build("An error occured", 500, "/messages/" + id, HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -135,7 +135,7 @@ public class MessageController {
         } catch (NumberFormatException ne) {
             return ErrorResponseEntity.build("The parameter 'id' is not valid", 400, "/messages/" + id, HttpStatus.BAD_REQUEST);
         } catch (NotFoundException nfe) {
-            return ErrorResponseEntity.build("Order was not found", 404, "/messages/" + id, HttpStatus.NOT_FOUND);
+            return ErrorResponseEntity.build("Message was not found", 404, "/messages/" + id, HttpStatus.NOT_FOUND);
         } catch (Exception e) {
             return ErrorResponseEntity.build("An error occured", 500, "/messages/" + id, HttpStatus.INTERNAL_SERVER_ERROR);
         }

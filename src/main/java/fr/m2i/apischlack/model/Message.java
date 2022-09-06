@@ -41,10 +41,6 @@ public class Message {
     @JoinColumn(name = "channel_id")
     private Channel channel;
 
-    @Override
-    public String toString() {
-        return "Message{" + "id=" + id + ", user=" + user + ", content=" + content + ", timestamp=" + timestamp + ", channel=" + channel + '}';
-    }
 
 
     public Message(Long id,String user, String content, Date timestamp) {
