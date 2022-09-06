@@ -5,15 +5,15 @@
 package fr.m2i.apischlack.model;
 
 import java.util.Date;
-import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -36,10 +36,20 @@ public class Message {
     @Temporal(TemporalType.TIMESTAMP)
     private Date timestamp;
     
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "channel_id")
     private Channel channel;
 
+
+
+    public Message(Long id,String user, String content, Date timestamp) {
+        this.id = id;
+        this.user = user;
+        this.content = content;
+        this.timestamp = timestamp;
+    }
+    
     public Message(Long id, String user, String content, Date timestamp, Channel channel) {
         this.id = id;
         this.user = user;
@@ -47,6 +57,7 @@ public class Message {
         this.timestamp = timestamp;
         this.channel = channel;
     }
+
 
 
     public Message() {
@@ -90,11 +101,6 @@ public class Message {
 
     public void setChannel(Channel channel) {
         this.channel = channel;
-    }
-
-    @Override
-    public String toString() {
-        return "Message{" + "id=" + id + ", user=" + user + ", content=" + content + ", timestamp=" + timestamp + ", channel=" + channel + '}';
     }
 
    
