@@ -15,4 +15,10 @@ public interface MessageRepository extends JpaRepository<Message, Long>{
         
     @Query("SELECT new Message(m.id, m.user, m.content, m.timestamp) FROM Message m WHERE m.channel.id = :channel_id")
     List<Message> getAllMessageFromChannel(@Param("channel_id") Long channelId);
+    
+    @Query("SELECT new Message(m.id, m.user, m.content, m.timestamp) FROM Message m WHERE m.id = :id")
+    Message MessageFindById(@Param("id") Long id);
+    
+    @Query("SELECT m FROM Message m WHERE m.id = :id")
+    Message MessageFindByIdPut(@Param("id") Long id);
 }

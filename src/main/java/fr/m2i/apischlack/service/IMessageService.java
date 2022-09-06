@@ -13,7 +13,8 @@ import java.util.List;
  */
 public interface IMessageService {
     List<Message> findAllMessageByChannel(Long id);
-    Message findById(Long id);
+    Message MessageFindById(Long id);
+    Message MessageFindByIdPut(Long id);
     Message save(Message message);
     Message update(Long id,Message content);
     void delete(Long id);

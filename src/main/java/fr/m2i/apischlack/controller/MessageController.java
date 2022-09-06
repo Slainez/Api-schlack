@@ -109,7 +109,7 @@ public class MessageController {
         
         try {
             Long messageId = Long.parseLong(id);
-            Message founded = messageService.findById(messageId);
+            Message founded = messageService.MessageFindById(messageId);
             MessageDTO dto = MessageMapper.buildMessageDTO(founded);
 
             return ResponseEntity.status(HttpStatus.OK).body(dto);

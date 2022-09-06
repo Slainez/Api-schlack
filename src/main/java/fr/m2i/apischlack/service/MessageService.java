@@ -31,15 +31,18 @@ public class MessageService implements IMessageService{
     }
 
     @Override
-    public Message findById(Long id) throws NotFoundException{
-        return repo.findById(id).orElseThrow(() -> {
-            throw new NotFoundException("Message with id: " + id + " was not found");
-        });
+    public Message MessageFindById(Long id) throws NotFoundException{
+        return repo.MessageFindById(id);
     }
 
     @Override
+    public Message MessageFindByIdPut(Long id) throws NotFoundException{
+        return repo.MessageFindById(id);
+    }
+    
+    @Override
     public void delete(Long id) {
-        Message toDelete = findById(id);
+        Message toDelete = MessageFindById(id);
         repo.delete(toDelete);
     }
 
@@ -50,8 +53,11 @@ public class MessageService implements IMessageService{
 
     @Override
     public Message update(Long id, Message content) {
-        Message toUpdate = findById(id);
+        Message toUpdate = MessageFindByIdPut(id);
+        System.out.println("update toUpdate : "+toUpdate.toString());
         toUpdate = MessageMapper.copy(toUpdate, content);
+        System.out.println("update toUpdate 2 : "+toUpdate.toString());
+
         return save(toUpdate);
     }
     
