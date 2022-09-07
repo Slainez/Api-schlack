@@ -39,8 +39,9 @@ public class ChannelController {
     public ChannelController(IChannelService channelService) {
         this.channelService = channelService;
     }
-
-
+    
+    // Récupère la liste de tous les canaux
+    
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Returns the list of all channels", nickname = "Get all channels", response = ChannelDTO.class)
     public ResponseEntity<Object> getAllChannel() {
@@ -55,7 +56,7 @@ public class ChannelController {
         return ResponseEntity.status(HttpStatus.OK).body(dtos);
     }
     
-    // findById
+    // Crée un canal
     
     @PostMapping(
             consumes = MediaType.APPLICATION_JSON_VALUE,
@@ -74,6 +75,8 @@ public class ChannelController {
             return ErrorResponseEntity.build("An error occured", 500, "/v1/channels", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    
+    // Modifie un canal
     
     @PutMapping(
             value = "/{id}",
@@ -101,6 +104,7 @@ public class ChannelController {
         }
     }
 
+    // Récupère un canal
     
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Return a Channel", nickname = "Get a Channel by id", response = ChannelDTO.class)
@@ -121,6 +125,9 @@ public class ChannelController {
             return ErrorResponseEntity.build("An error occured", 500, "/v1/channels/" + id, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    
+    // Supprime un canal
+    
    @DeleteMapping(value = "/{id}")
    @ApiOperation(value = "delete an Channel", nickname = "Delete an Channel by id", code = 204)
     public ResponseEntity<Object> deleteChannel(@PathVariable("id") String id) {

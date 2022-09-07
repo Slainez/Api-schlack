@@ -41,6 +41,8 @@ public class MessageController {
         this.messageService = messageService;
     }
     
+    // Récupère tous les messages d'un canal
+    
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Returns the list of all messages from a channel", nickname = "Get all messages from channel", response = MessageDTO.class)
     public ResponseEntity<Object> getAllMessageFromChannel(@PathVariable("id") String id) {
@@ -67,7 +69,7 @@ public class MessageController {
         }
     }
     
-    // findById
+    // Crée un message
     
     @PostMapping(
             consumes = MediaType.APPLICATION_JSON_VALUE,
@@ -86,6 +88,8 @@ public class MessageController {
             return ErrorResponseEntity.build("An error occured", 500, "/messages", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    
+    // Modifie un message
     
     @PutMapping(
             value = "/{id}",
@@ -114,6 +118,7 @@ public class MessageController {
         }
     }
 
+    // Récupère un message
     
     @GetMapping(value = "/message/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Return a message", nickname = "Get a message by id", response = MessageDTO.class)
@@ -135,8 +140,10 @@ public class MessageController {
         }
     }
     
-   @DeleteMapping(value = "/{id}")
-   @ApiOperation(value = "delete a message", nickname = "Delete a message by id", code = 204)
+    // Supprime un message
+    
+    @DeleteMapping(value = "/{id}")
+    @ApiOperation(value = "delete a message", nickname = "Delete a message by id", code = 204)
     public ResponseEntity<Object> deleteMessage(@PathVariable("id") String id) {
         try {
             Long messageId = Long.parseLong(id);
