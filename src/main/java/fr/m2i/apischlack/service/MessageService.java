@@ -41,9 +41,13 @@ public class MessageService implements IMessageService{
     }
     
     @Override
-    public void delete(Long id) {
+    public boolean delete(Long id) throws NotFoundException{
         Message toDelete = MessageFindById(id);
-        repo.delete(toDelete);
+        if(toDelete != null){
+           repo.delete(toDelete);
+           return true;
+        }
+        return false;
     }
 
     @Override

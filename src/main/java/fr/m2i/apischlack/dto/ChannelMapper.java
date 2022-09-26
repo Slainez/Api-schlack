@@ -22,9 +22,11 @@ public static ChannelDTO buildChannelDTO(Channel Channel) {
             channelType = "MAIN";
         } else if (Channel.getChannelType()== ChannelType.NOTMAIN){
             channelType = "NOTMAIN";
-        }else{
+        }else if (Channel.getChannelType()== ChannelType.SUB){
             channelType = "SUB";
 
+        }else{
+            channelType = "NOTMAIN";
         }
 
         return new ChannelDTO(Channel.getId(), Channel.getName(), Channel.getListMessage(), channelType);

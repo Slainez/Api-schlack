@@ -17,5 +17,5 @@ public interface IMessageService {
     Message MessageFindByIdPut(Long id);
     Message save(Message message);
     Message update(Long id,Message content);
-    void delete(Long id);
+    boolean delete(Long id);
 }

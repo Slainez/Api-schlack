@@ -6,6 +6,7 @@ package fr.m2i.apischlack.controller;
 import fr.m2i.apischlack.dto.MessageDTO;
 import fr.m2i.apischlack.dto.MessageMapper;
 import fr.m2i.apischlack.exception.NotFoundException;
+import fr.m2i.apischlack.exception.IllegalArgException;
 import fr.m2i.apischlack.model.Message;
 import fr.m2i.apischlack.response.ErrorResponseEntity;
 import fr.m2i.apischlack.service.IMessageService;
@@ -47,9 +48,9 @@ public class MessageController {
         try {
             Long ChanId = Long.parseLong(id);
             List<Message> messages = messageService.findAllMessageByChannel(ChanId);
-            if (messages.isEmpty()) {
-                return ErrorResponseEntity.build("Channel was not found", 404, "/v1/channels/" + id, HttpStatus.NOT_FOUND);
-            }
+//            if (messages.isEmpty()) {
+//                return ErrorResponseEntity.build("Channel was not found", 404, "/v1/channels/" + id, HttpStatus.NOT_FOUND);
+//            }
             List<MessageDTO> dtos = new ArrayList();
 
             for (Message message : messages) {
@@ -59,11 +60,11 @@ public class MessageController {
 
             return ResponseEntity.status(HttpStatus.OK).body(dtos);
         } catch (NumberFormatException ne) {
-            return ErrorResponseEntity.build("The parameter 'id' is not valid", 400, "/v1/channels/" + id, HttpStatus.BAD_REQUEST);
+            return ErrorResponseEntity.build("The parameter 'id' is not valid", 400, "/messages/" + id, HttpStatus.BAD_REQUEST);
         } catch (NotFoundException nfe) {
-            return ErrorResponseEntity.build("Channel was not found", 404, "/v1/channels/" + id, HttpStatus.NOT_FOUND);
+            return ErrorResponseEntity.build("Channel was not found", 404, "/messages/" + id, HttpStatus.NOT_FOUND);
         } catch (Exception e) {
-            return ErrorResponseEntity.build("An error occured", 500, "/v1/channels/" + id, HttpStatus.INTERNAL_SERVER_ERROR);
+            return ErrorResponseEntity.build("An error occured", 500, "/messages/" + id, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
     
@@ -76,12 +77,15 @@ public class MessageController {
     @ApiOperation(value = "Create a message", nickname = "Create a message", response = MessageDTO.class)
     public ResponseEntity<Object> createMessage(@RequestBody MessageDTO dto) {
         try {
+            if(dto.getId() == null){
             Message toCreate = MessageMapper.buildMessage(dto);
             Message created = messageService.save(toCreate);
             MessageDTO createdDTO = MessageMapper.buildMessageDTO(created);
 
             return ResponseEntity.status(HttpStatus.OK).body(createdDTO);
-
+            }else{
+            return ErrorResponseEntity.build("The parameter 'id' must be remove", 400, "/messages/", HttpStatus.BAD_REQUEST);
+            }
         } catch (Exception e) {
             return ErrorResponseEntity.build("An error occured", 500, "/messages", HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -130,7 +134,9 @@ public class MessageController {
             return ErrorResponseEntity.build("The parameter 'id' is not valid", 400, "/messages/" + id, HttpStatus.BAD_REQUEST);
         } catch (NotFoundException nfe) {
             return ErrorResponseEntity.build("Message was not found", 404, "/messages/" + id, HttpStatus.NOT_FOUND);
-        } catch (Exception e) {
+        } catch (NullPointerException npe) {
+            return ErrorResponseEntity.build("Message was not found", 404, "/messages/" + id, HttpStatus.NOT_FOUND);
+        }catch (Exception e) {
             return ErrorResponseEntity.build("An error occured", 500, "/messages/" + id, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -140,15 +146,19 @@ public class MessageController {
     public ResponseEntity<Object> deleteMessage(@PathVariable("id") String id) {
         try {
             Long messageId = Long.parseLong(id);
-            messageService.delete(messageId);
-
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+            if (messageService.delete(messageId)){
+                return ResponseEntity.status(HttpStatus.OK).body("Message was successfully deleted");
+            }else{
+                return ErrorResponseEntity.build("Message was not found", 404, "/messages/" + id, HttpStatus.NOT_FOUND);
+            }
+  
 
         } catch (NumberFormatException ne) {
             return ErrorResponseEntity.build("The parameter 'id' is not valid", 400, "/messages/" + id, HttpStatus.BAD_REQUEST);
         } catch (NotFoundException nfe) {
             return ErrorResponseEntity.build("Message was not found", 404, "/messages/" + id, HttpStatus.NOT_FOUND);
-        } catch (Exception e) {
+        }catch (Exception e) {
+            System.out.println("e "+e);
             return ErrorResponseEntity.build("An error occured", 500, "/messages/" + id, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
