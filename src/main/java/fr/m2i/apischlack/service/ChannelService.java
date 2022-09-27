@@ -33,7 +33,7 @@ public class ChannelService implements IChannelService{
     @Override
     public Channel findById(Long id) throws NotFoundException {
         return repo.findById(id).orElseThrow(() -> {
-            throw new NotFoundException("Customer with id: " + id + " was not found");
+            throw new NotFoundException("Channel with id: " + id + " was not found");
         });
     }
 
@@ -47,7 +47,7 @@ public class ChannelService implements IChannelService{
     }
     
     @Override
-    public Channel update(Long id, Channel content) {
+    public Channel update(Long id, Channel content) throws NotFoundException{
 
         Channel toUpdate = findById(id);
         toUpdate = ChannelMapper.copy(toUpdate, content);

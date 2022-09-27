@@ -6,6 +6,7 @@ package fr.m2i.apischlack.controller;
 import fr.m2i.apischlack.dto.MessageDTO;
 import fr.m2i.apischlack.dto.MessageMapper;
 import fr.m2i.apischlack.exception.NotFoundException;
+import fr.m2i.apischlack.exception.IllegalArgException;
 import fr.m2i.apischlack.model.Message;
 import fr.m2i.apischlack.response.ErrorResponseEntity;
 import fr.m2i.apischlack.service.IMessageService;
@@ -16,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,6 +31,7 @@ import org.springframework.web.bind.annotation.RestController;
  *
  * @author ben
  */
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/v1/messages")
 public class MessageController {
@@ -44,16 +47,27 @@ public class MessageController {
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Returns the list of all messages from a channel", nickname = "Get all messages from channel", response = MessageDTO.class)
     public ResponseEntity<Object> getAllMessageFromChannel(@PathVariable("id") String id) {
-        Long ChanId = Long.parseLong(id);
-        List<Message> messages = messageService.findAllMessageByChannel(ChanId);
-        List<MessageDTO> dtos = new ArrayList();
+        try {
+            Long ChanId = Long.parseLong(id);
+            List<Message> messages = messageService.findAllMessageByChannel(ChanId);
+//            if (messages.isEmpty()) {
+//                return ErrorResponseEntity.build("Channel was not found", 404, "/v1/channels/" + id, HttpStatus.NOT_FOUND);
+//            }
+            List<MessageDTO> dtos = new ArrayList();
 
-        for (Message message : messages) {
-            MessageDTO dto = MessageMapper.buildMessageDTO(message);
-            dtos.add(dto);
+            for (Message message : messages) {
+                MessageDTO dto = MessageMapper.buildMessageDTO(message);
+                dtos.add(dto);
+            }
+
+            return ResponseEntity.status(HttpStatus.OK).body(dtos);
+        } catch (NumberFormatException ne) {
+            return ErrorResponseEntity.build("The parameter 'id' is not valid", 400, "/messages/" + id, HttpStatus.BAD_REQUEST);
+        } catch (NotFoundException nfe) {
+            return ErrorResponseEntity.build("Channel was not found", 404, "/messages/" + id, HttpStatus.NOT_FOUND);
+        } catch (Exception e) {
+            return ErrorResponseEntity.build("An error occured", 500, "/messages/" + id, HttpStatus.INTERNAL_SERVER_ERROR);
         }
-
-        return ResponseEntity.status(HttpStatus.OK).body(dtos);
     }
     
     // findById
@@ -65,12 +79,15 @@ public class MessageController {
     @ApiOperation(value = "Create a message", nickname = "Create a message", response = MessageDTO.class)
     public ResponseEntity<Object> createMessage(@RequestBody MessageDTO dto) {
         try {
+            if(dto.getId() == null){
             Message toCreate = MessageMapper.buildMessage(dto);
             Message created = messageService.save(toCreate);
             MessageDTO createdDTO = MessageMapper.buildMessageDTO(created);
 
             return ResponseEntity.status(HttpStatus.OK).body(createdDTO);
-
+            }else{
+            return ErrorResponseEntity.build("The parameter 'id' must be remove", 400, "/messages/", HttpStatus.BAD_REQUEST);
+            }
         } catch (Exception e) {
             return ErrorResponseEntity.build("An error occured", 500, "/messages", HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -98,6 +115,7 @@ public class MessageController {
         } catch (NotFoundException nfe) {
             return ErrorResponseEntity.build("Message was not found", 404, "/messages/" + id, HttpStatus.NOT_FOUND);
         } catch (Exception e) {
+            System.out.println(e.toString());
             return ErrorResponseEntity.build("An error occured", 500, "/messages/" + id, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -118,7 +136,9 @@ public class MessageController {
             return ErrorResponseEntity.build("The parameter 'id' is not valid", 400, "/messages/" + id, HttpStatus.BAD_REQUEST);
         } catch (NotFoundException nfe) {
             return ErrorResponseEntity.build("Message was not found", 404, "/messages/" + id, HttpStatus.NOT_FOUND);
-        } catch (Exception e) {
+        } catch (NullPointerException npe) {
+            return ErrorResponseEntity.build("Message was not found", 404, "/messages/" + id, HttpStatus.NOT_FOUND);
+        }catch (Exception e) {
             return ErrorResponseEntity.build("An error occured", 500, "/messages/" + id, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -128,15 +148,19 @@ public class MessageController {
     public ResponseEntity<Object> deleteMessage(@PathVariable("id") String id) {
         try {
             Long messageId = Long.parseLong(id);
-            messageService.delete(messageId);
-
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+            if (messageService.delete(messageId)){
+                return ResponseEntity.status(HttpStatus.OK).body("Message was successfully deleted");
+            }else{
+                return ErrorResponseEntity.build("Message was not found", 404, "/messages/" + id, HttpStatus.NOT_FOUND);
+            }
+  
 
         } catch (NumberFormatException ne) {
             return ErrorResponseEntity.build("The parameter 'id' is not valid", 400, "/messages/" + id, HttpStatus.BAD_REQUEST);
         } catch (NotFoundException nfe) {
             return ErrorResponseEntity.build("Message was not found", 404, "/messages/" + id, HttpStatus.NOT_FOUND);
-        } catch (Exception e) {
+        }catch (Exception e) {
+            System.out.println("e "+e);
             return ErrorResponseEntity.build("An error occured", 500, "/messages/" + id, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

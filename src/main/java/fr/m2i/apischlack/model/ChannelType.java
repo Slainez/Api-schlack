@@ -8,7 +8,7 @@ package fr.m2i.apischlack.model;
  *
  * @author ben
  */
-public enum ChannelMain {
+public enum ChannelType {
     MAIN,NOTMAIN,SUB
 }
 

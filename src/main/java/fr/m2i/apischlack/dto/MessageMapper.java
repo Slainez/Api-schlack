@@ -26,12 +26,9 @@ public class MessageMapper {
     }
     
         public static Message buildMessage(MessageDTO messageDTO){
-            //System.out.println("buildMessage :"+ messageDTO);
-            
             Channel channel = null;
 
         if (messageDTO.getChannel() != null && messageDTO.getChannel().getId() != null) {
-            System.out.println("buildMessage If :"+ messageDTO);
             channel = new Channel();
             channel.setId(messageDTO.getChannel().getId());
         }

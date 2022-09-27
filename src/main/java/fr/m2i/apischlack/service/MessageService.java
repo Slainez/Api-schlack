@@ -26,7 +26,7 @@ public class MessageService implements IMessageService{
         this.repo = repo;
     }
     @Override
-    public List<Message> findAllMessageByChannel(Long id) {
+    public List<Message> findAllMessageByChannel(Long id) throws NotFoundException{
         return repo.getAllMessageFromChannel(id);
     }
 
@@ -41,9 +41,13 @@ public class MessageService implements IMessageService{
     }
     
     @Override
-    public void delete(Long id) {
+    public boolean delete(Long id) throws NotFoundException{
         Message toDelete = MessageFindById(id);
-        repo.delete(toDelete);
+        if(toDelete != null){
+           repo.delete(toDelete);
+           return true;
+        }
+        return false;
     }
 
     @Override
@@ -52,7 +56,7 @@ public class MessageService implements IMessageService{
     }
 
     @Override
-    public Message update(Long id, Message content) {
+    public Message update(Long id, Message content)throws NotFoundException{
         Message toUpdate = MessageFindByIdPut(id);
         toUpdate = MessageMapper.copy(toUpdate, content);
         return save(toUpdate);

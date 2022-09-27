@@ -5,7 +5,7 @@
 package fr.m2i.apischlack.dto;
 
 import fr.m2i.apischlack.model.Channel;
-import fr.m2i.apischlack.model.ChannelMain;
+import fr.m2i.apischlack.model.ChannelType;
 
 /**
  *
@@ -17,17 +17,19 @@ public static ChannelDTO buildChannelDTO(Channel Channel) {
         if (Channel == null) {
             return null;
         }
-        String main;
-        if (Channel.getMain() == ChannelMain.MAIN) {
-            main = "MAIN";
-        } else if (Channel.getMain() == ChannelMain.NOTMAIN){
-            main = "NOTMAIN";
-        }else{
-            main = "SUB";
+        String channelType;
+        if (Channel.getChannelType()== ChannelType.MAIN) {
+            channelType = "MAIN";
+        } else if (Channel.getChannelType()== ChannelType.NOTMAIN){
+            channelType = "NOTMAIN";
+        }else if (Channel.getChannelType()== ChannelType.SUB){
+            channelType = "SUB";
 
+        }else{
+            channelType = "NOTMAIN";
         }
 
-        return new ChannelDTO(Channel.getId(), Channel.getName(), Channel.getListMessage(), main);
+        return new ChannelDTO(Channel.getId(), Channel.getName(), Channel.getListMessage(), channelType);
 
     }
 
@@ -35,17 +37,17 @@ public static ChannelDTO buildChannelDTO(Channel Channel) {
         if (ChannelDTO == null) {
             return null;
         }
-        ChannelMain main;
-        if ("MAIN".equals(ChannelDTO.getMain())) {
-            main = ChannelMain.MAIN;
-        } else if ("NOTMAIN".equals(ChannelDTO.getMain())){
-            main = ChannelMain.NOTMAIN;
+        ChannelType channelType;
+        if ("MAIN".equals(ChannelDTO.getChannelType())) {
+            channelType = ChannelType.MAIN;
+        } else if ("NOTMAIN".equals(ChannelDTO.getChannelType())){
+            channelType = ChannelType.NOTMAIN;
         }else{
-            main = ChannelMain.SUB;
+            channelType = ChannelType.SUB;
 
         }
         
-        Channel newChannel = new Channel(ChannelDTO.getId(), ChannelDTO.getName(), ChannelDTO.getListMessage(), main);
+        Channel newChannel = new Channel(ChannelDTO.getId(), ChannelDTO.getName(), ChannelDTO.getListMessage(), channelType);
         return newChannel;
     }
 
@@ -62,8 +64,8 @@ public static ChannelDTO buildChannelDTO(Channel Channel) {
             Channel.setListMessage(content.getListMessage());
         }
 
-        if (content.getMain() != null) {
-            Channel.setMain(content.getMain());
+        if (content.getChannelType()!= null) {
+            Channel.setChannelType(content.getChannelType());
         }
 
         return Channel;
