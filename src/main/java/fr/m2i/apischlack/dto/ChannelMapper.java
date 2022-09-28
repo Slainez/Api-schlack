@@ -42,8 +42,10 @@ public static ChannelDTO buildChannelDTO(Channel Channel) {
             channelType = ChannelType.MAIN;
         } else if ("NOTMAIN".equals(ChannelDTO.getChannelType())){
             channelType = ChannelType.NOTMAIN;
-        }else{
+        }else if ("SUB".equals(ChannelDTO.getChannelType())){
             channelType = ChannelType.SUB;
+        }else{
+            channelType = ChannelType.NOTMAIN;
 
         }
         

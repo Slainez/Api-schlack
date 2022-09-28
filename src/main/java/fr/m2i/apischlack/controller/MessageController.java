@@ -79,6 +79,7 @@ public class MessageController {
     @ApiOperation(value = "Create a message", nickname = "Create a message", response = MessageDTO.class)
     public ResponseEntity<Object> createMessage(@RequestBody MessageDTO dto) {
         try {
+            System.out.println("dto "+dto);
             if(dto.getId() == null){
             Message toCreate = MessageMapper.buildMessage(dto);
             Message created = messageService.save(toCreate);

@@ -29,7 +29,7 @@ public class Message {
     @Column(name="user")
     private String user;
     
-    @Column(name="content")
+    @Column(name="content",length=500)
     private String content;
     
     @Column(name="timestamp")
