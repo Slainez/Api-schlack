@@ -16,8 +16,8 @@ public interface IChannelService {
 
     Channel findById(Long id);
 
-    Channel create(Channel customer);
-    Channel save(Channel customer);
+    Channel create(Channel channel);
+    Channel save(Channel channel);
     Channel update(Long id,Channel content);
     void delete(Long id);
 }

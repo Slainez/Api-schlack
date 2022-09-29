@@ -38,12 +38,12 @@ public class ChannelService implements IChannelService{
     }
 
     @Override
-    public Channel create(Channel customer) {
-        return repo.save(customer);
+    public Channel create(Channel channel) {
+        return repo.save(channel);
     }
 
-    public Channel save(Channel customer) {
-        return repo.save(customer);
+    public Channel save(Channel channel) {
+        return repo.save(channel);
     }
     
     @Override
