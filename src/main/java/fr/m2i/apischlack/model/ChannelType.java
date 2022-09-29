@@ -8,6 +8,7 @@ package fr.m2i.apischlack.model;
  *
  * @author ben
  */
-public enum OrderState {
-    CANCELED,OPTION,CONFIRMED
+public enum ChannelType {
+    MAIN,NOTMAIN,SUB
 }
+

@@ -4,20 +4,20 @@
  */
 package fr.m2i.apischlack.service;
 
-import fr.m2i.apischlack.model.Customer;
+import fr.m2i.apischlack.model.Channel;
 import java.util.List;
 
 /**
  *
  * @author ben
  */
-public interface ICustomerService {
+public interface IChannelService {
+    List<Channel> findAll();
 
-    List<Customer> findAll();
+    Channel findById(Long id);
 
-    Customer findById(Long id);
-
-    Customer create(Customer customer);
-    Customer save(Customer customer);
-    Customer update(Long id,Customer content);
+    Channel create(Channel channel);
+    Channel save(Channel channel);
+    Channel update(Long id,Channel content);
+    void delete(Long id);
 }
