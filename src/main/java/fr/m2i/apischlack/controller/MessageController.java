@@ -6,7 +6,6 @@ package fr.m2i.apischlack.controller;
 import fr.m2i.apischlack.dto.MessageDTO;
 import fr.m2i.apischlack.dto.MessageMapper;
 import fr.m2i.apischlack.exception.NotFoundException;
-import fr.m2i.apischlack.exception.IllegalArgException;
 import fr.m2i.apischlack.model.Message;
 import fr.m2i.apischlack.response.ErrorResponseEntity;
 import fr.m2i.apischlack.service.IMessageService;
